@@ -6,14 +6,14 @@ import joomlaIcon from '@/assets/icons/joomla_icon.svg'; // 站內的 icon
 
 export interface Bookmark {
   name: string;
+  domain: string;
   url?: string;
   icon?: string;
-  domain?: string;
   category?: string;
 }
 
 export interface BookmarkWithFavicon extends Bookmark {
-  favicon: string | null;
+  favicon?: string;
 }
 
 export const navItems = [

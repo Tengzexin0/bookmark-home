@@ -10,5 +10,5 @@ export function getFavicon(domain?: string) {
   if (domain?.includes('mail.google.com') || domain?.includes('gmail.com')) {
     return 'https://icons.duckduckgo.com/ip3/mail.google.com.ico';
   }
-  return domain ? `https://${proxyUrl}/?domain=${domain}&sz=64` : null;
+  return domain ? `https://${proxyUrl}/?domain=${domain}&sz=64` : '';
 }

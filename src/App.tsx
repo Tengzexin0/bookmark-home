@@ -15,6 +15,31 @@ import {
   type SearchEngine,
 } from '@/lib/const';
 
+const faviconCache = new Map<string, string>();
+
+const getFaviconWithCache = (domain: string) => {
+  const start = performance.now();
+
+  if (faviconCache.has(domain)) {
+    return faviconCache.get(domain);
+  }
+
+  // const url = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+  const url = getFavicon(domain);
+  faviconCache.set(domain, url);
+
+  const end = performance.now();
+  if (end - start > 1) {
+    console.warn(
+      `[Performance] getFavicon for ${domain} took ${(end - start).toFixed(
+        4
+      )}ms`
+    );
+  }
+
+  return url;
+};
+
 function App() {
   const [activeTab, setActiveTab] = useState<NavItems>('Home');
   const [activeSearchEngine, setActiveSearchEngine] = useState<SearchEngine>({
@@ -24,15 +49,20 @@ function App() {
   });
 
   const filteredBookmarks = useMemo<BookmarkWithFavicon[]>(() => {
-    return bookmarks.reduce<BookmarkWithFavicon[]>((acc, bm) => {
+    console.time('filter-logic'); // 调试用：记录开始时间
+    const res = bookmarks.reduce<BookmarkWithFavicon[]>((acc, bm) => {
       if (bm.category === activeTab) {
         acc.push({
           ...bm,
-          favicon: getFavicon(bm.domain),
+          favicon: getFaviconWithCache(bm.domain),
         });
       }
       return acc;
     }, []);
+
+    console.timeEnd('filter-logic');
+
+    return res;
   }, [activeTab]);
 
   const BackInformation = useMemo(() => {
@@ -67,13 +97,13 @@ function App() {
       <BackgroundVideo
         media="(min-width: 768px)"
         src={BackInformation.BgVideo}
-        className="hidden md:block brightness-75"
+        className="hidden md:block brightness-75 will-change-transform"
         poster={BackInformation.girlsPoster}
       />
       <BackgroundVideo
         media="(max-width: 767px)"
         src={BackInformation.BgSmVideo}
-        className="block md:hidden brightness-75"
+        className="block md:hidden brightness-75 will-change-transform"
         poster={BackInformation.originosPoster}
       />
       <div className="absolute inset-0 bg-black/50 z-[-1]" />
