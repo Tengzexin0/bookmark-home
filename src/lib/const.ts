@@ -1,8 +1,8 @@
-import googleIcon from '@/assets/google_icon.svg';
-import bingIcon from '@/assets/bing_icon.svg';
-import baiduIcon from '@/assets/baidu_icon.svg';
-import githubIcon from '@/assets/github_icon.svg';
-import joomlaIcon from '@/assets/joomla_icon.svg'; // 站內的 icon
+import googleIcon from '@/assets/icons/google_icon.svg';
+import bingIcon from '@/assets/icons/bing_icon.svg';
+import baiduIcon from '@/assets/icons/baidu_icon.svg';
+import githubIcon from '@/assets/icons/github_icon.svg';
+import joomlaIcon from '@/assets/icons/joomla_icon.svg'; // 站內的 icon
 
 export interface Bookmark {
   name: string;
@@ -53,7 +53,8 @@ export const searchEngines = [
 const bookmarkHome: Bookmark[] = [
   {
     name: 'Youtube',
-    domain: 'https://youtube.com',
+    domain: 'youtube.com',
+    url: 'https://youtube.com',
     category: 'Home',
   },
   {

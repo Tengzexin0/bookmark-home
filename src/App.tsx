@@ -3,7 +3,7 @@ import { Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { cn } from '@/lib/utils';
+import { cn, getFavicon } from '@/lib/utils';
 import { BackgroundVideo } from './components/BackgroundVideo';
 import {
   bookmarks,
@@ -13,17 +13,8 @@ import {
   type NavItems,
   type SearchEngine,
 } from '@/lib/const';
-import BgVideo from '@/assets/girls.mp4';
+import BgVideo from '@/assets/originos6.mp4';
 import BgSmVideo from '@/assets/originos6.mp4';
-
-function getFavicon(domain?: string) {
-  if (domain?.includes('mail.google.com') || domain?.includes('gmail.com')) {
-    return 'https://icons.duckduckgo.com/ip3/mail.google.com.ico';
-  }
-  return domain
-    ? `https://www.google.com/s2/favicons?domain=${domain}&sz=64`
-    : null;
-}
 
 function App() {
   const [activeTab, setActiveTab] = useState<NavItems>('Home');
