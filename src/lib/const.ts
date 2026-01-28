@@ -12,6 +12,10 @@ export interface Bookmark {
   category?: string;
 }
 
+export interface BookmarkWithFavicon extends Bookmark {
+  favicon: string | null;
+}
+
 export const navItems = [
   'Home',
   'Mail & Domain',

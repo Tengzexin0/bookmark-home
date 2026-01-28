@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useMemo } from 'react';
 import { Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -10,11 +10,10 @@ import {
   googleIcon,
   navItems,
   searchEngines,
+  type BookmarkWithFavicon,
   type NavItems,
   type SearchEngine,
 } from '@/lib/const';
-import BgVideo from '@/assets/originos6.mp4';
-import BgSmVideo from '@/assets/originos6.mp4';
 
 function App() {
   const [activeTab, setActiveTab] = useState<NavItems>('Home');
@@ -23,6 +22,27 @@ function App() {
     base: 'https://www.google.com/search?q=',
     icon: googleIcon,
   });
+
+  const filteredBookmarks = useMemo<BookmarkWithFavicon[]>(() => {
+    return bookmarks.reduce<BookmarkWithFavicon[]>((acc, bm) => {
+      if (bm.category === activeTab) {
+        acc.push({
+          ...bm,
+          favicon: getFavicon(bm.domain),
+        });
+      }
+      return acc;
+    }, []);
+  }, [activeTab]);
+
+  const BackInformation = useMemo(() => {
+    const R2_URL = 'https://assets-cdn.tzx.cc.cd';
+    const BgVideo = `${R2_URL}/video/girls.mp4`;
+    const BgSmVideo = `${R2_URL}/video/originos.mp4`;
+    const girlsPoster = `${R2_URL}/video/girls_poster.jpg`;
+    const originosPoster = `${R2_URL}/video/originos_poster.jpg`;
+    return { BgVideo, BgSmVideo, girlsPoster, originosPoster };
+  }, []);
 
   const handleSearch = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -38,10 +58,6 @@ function App() {
     setActiveTab(item);
   }
 
-  const filteredBookmarks = bookmarks.filter((bm) => {
-    return bm.category === activeTab;
-  });
-
   function handleClickEngine(eng: SearchEngine) {
     setActiveSearchEngine(eng);
   }
@@ -50,13 +66,15 @@ function App() {
     <div className="relative h-screen flex flex-col overflow-hidden">
       <BackgroundVideo
         media="(min-width: 768px)"
-        src={BgVideo}
-        className="brightness-75"
+        src={BackInformation.BgVideo}
+        className="hidden md:block brightness-75"
+        poster={BackInformation.girlsPoster}
       />
       <BackgroundVideo
         media="(max-width: 767px)"
-        src={BgSmVideo}
-        className="brightness-75"
+        src={BackInformation.BgSmVideo}
+        className="block md:hidden brightness-75"
+        poster={BackInformation.originosPoster}
       />
       <div className="absolute inset-0 bg-black/50 z-[-1]" />
       <div className="flex flex-col w-full h-full">
@@ -116,7 +134,6 @@ function App() {
           <div className="flex-1 w-full overflow-y-auto overscroll-contain px-2 sm:px-4 lg:px-8 pb-20">
             <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-4 sm:gap-6 md:gap-10 lg:gap-12 xl:gap-14 w-full max-w-7xl mx-auto">
               {filteredBookmarks.map((bm, i) => {
-                const favicon = getFavicon(bm.domain);
                 return (
                   <a
                     key={i}
@@ -128,9 +145,9 @@ function App() {
                     <Card className="h-full border-none backdrop-blur-sm bg-white/10 hover:bg-white/25 transition-opacity duration-300 rounded-2xl overflow-hidden shadow-xl flex flex-col items-center justify-center p-5 gap-3">
                       {bm.icon ? (
                         <div className="text-[32px]/[32px]">{bm.icon}</div>
-                      ) : favicon ? (
+                      ) : bm.favicon ? (
                         <img
-                          src={favicon}
+                          src={bm.favicon}
                           alt={bm.name}
                           className="w-8 h-8 rounded-lg object-contain"
                           loading="lazy"
