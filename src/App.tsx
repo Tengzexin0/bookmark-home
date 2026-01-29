@@ -10,7 +10,7 @@ import {
   googleIcon,
   navItems,
   searchEngines,
-  type BookmarkWithFavicon,
+  type Bookmark,
   type NavItems,
   type SearchEngine,
 } from '@/lib/const';
@@ -23,7 +23,7 @@ function App() {
     icon: googleIcon,
   });
 
-  const filteredBookmarks = useMemo<BookmarkWithFavicon[]>(() => {
+  const filteredBookmarks = useMemo<Bookmark[]>(() => {
     return bookmarks.filter((bm) => bm.category === activeTab);
   }, [activeTab]);
 
@@ -68,7 +68,7 @@ function App() {
         className="block md:hidden brightness-75"
         poster={BackInformation.originosPoster}
       />
-      <div className="absolute inset-0 bg-black/50 z-[-1]" />
+      <div className="fixed inset-0 bg-black/50 z-[-1]" />
       <div className="flex flex-col w-full h-full">
         <nav className="flex-shrink-0 flex flex-wrap justify-center items-center mx-auto h-16 gap-x-3 md:gap-x-16 font-medium">
           {navItems.map((item) => (
