@@ -303,6 +303,11 @@ const bookmarkTools: Bookmark[] = [
     domain: 'https://icon-icons.com',
     category: 'Tools',
   },
+  {
+    name: 'png-to-svg',
+    domain: 'https://www.adobe.com/cn/express/feature/image/convert/png-to-svg',
+    category: 'Tools',
+  },
 ];
 const bookmarkCloud: Bookmark[] = [
   {

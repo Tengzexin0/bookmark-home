@@ -18,25 +18,12 @@ import {
 const faviconCache = new Map<string, string>();
 
 const getFaviconWithCache = (domain: string) => {
-  const start = performance.now();
-
   if (faviconCache.has(domain)) {
     return faviconCache.get(domain);
   }
 
-  // const url = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
   const url = getFavicon(domain);
   faviconCache.set(domain, url);
-
-  const end = performance.now();
-  if (end - start > 1) {
-    console.warn(
-      `[Performance] getFavicon for ${domain} took ${(end - start).toFixed(
-        4
-      )}ms`
-    );
-  }
-
   return url;
 };
 
@@ -49,20 +36,7 @@ function App() {
   });
 
   const filteredBookmarks = useMemo<BookmarkWithFavicon[]>(() => {
-    console.time('filter-logic'); // 调试用：记录开始时间
-    const res = bookmarks.reduce<BookmarkWithFavicon[]>((acc, bm) => {
-      if (bm.category === activeTab) {
-        acc.push({
-          ...bm,
-          favicon: getFaviconWithCache(bm.domain),
-        });
-      }
-      return acc;
-    }, []);
-
-    console.timeEnd('filter-logic');
-
-    return res;
+    return bookmarks.filter((bm) => bm.category === activeTab);
   }, [activeTab]);
 
   const BackInformation = useMemo(() => {
@@ -93,17 +67,17 @@ function App() {
   }
 
   return (
-    <div className="relative h-screen flex flex-col overflow-hidden">
+    <div className="relative h-[100dvh] flex flex-col overflow-hidden">
       <BackgroundVideo
         media="(min-width: 768px)"
         src={BackInformation.BgVideo}
-        className="hidden md:block brightness-75 will-change-transform"
+        className="hidden md:block brightness-75"
         poster={BackInformation.girlsPoster}
       />
       <BackgroundVideo
         media="(max-width: 767px)"
         src={BackInformation.BgSmVideo}
-        className="block md:hidden brightness-75 will-change-transform"
+        className="block md:hidden brightness-75"
         poster={BackInformation.originosPoster}
       />
       <div className="absolute inset-0 bg-black/50 z-[-1]" />
@@ -177,10 +151,9 @@ function App() {
                         <div className="text-[32px]/[32px]">{bm.icon}</div>
                       ) : bm.favicon ? (
                         <img
-                          src={bm.favicon}
+                          src={getFaviconWithCache(bm.favicon)}
                           alt={bm.name}
                           className="w-8 h-8 rounded-lg object-contain"
-                          loading="lazy"
                         />
                       ) : (
                         <div className="w-14 h-14 bg-gray-700 rounded-lg" />

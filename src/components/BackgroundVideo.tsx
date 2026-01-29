@@ -35,7 +35,7 @@ export function BackgroundVideo({
       muted
       playsInline
       preload="auto"
-      className={`absolute inset-0 w-full h-full object-cover -z-10 ${className}`}
+      className={`absolute inset-0 w-full h-full object-cover -z-10 will-change-transform ${className}`}
       {...props}
     >
       <source media={media} src={src} type="video/mp4" />
