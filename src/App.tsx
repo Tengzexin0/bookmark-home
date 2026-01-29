@@ -3,7 +3,7 @@ import { Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { cn, getFavicon } from '@/lib/utils';
+import { cn, getFaviconWithCache } from '@/lib/utils';
 import { BackgroundVideo } from './components/BackgroundVideo';
 import {
   bookmarks,
@@ -14,18 +14,6 @@ import {
   type NavItems,
   type SearchEngine,
 } from '@/lib/const';
-
-const faviconCache = new Map<string, string>();
-
-const getFaviconWithCache = (domain: string) => {
-  if (faviconCache.has(domain)) {
-    return faviconCache.get(domain);
-  }
-
-  const url = getFavicon(domain);
-  faviconCache.set(domain, url);
-  return url;
-};
 
 function App() {
   const [activeTab, setActiveTab] = useState<NavItems>('Home');
@@ -149,14 +137,14 @@ function App() {
                     <Card className="h-full border-none backdrop-blur-sm bg-white/10 hover:bg-white/25 transition-opacity duration-300 rounded-2xl overflow-hidden shadow-xl flex flex-col items-center justify-center p-5 gap-3">
                       {bm.icon ? (
                         <div className="text-[32px]/[32px]">{bm.icon}</div>
-                      ) : bm.favicon ? (
+                      ) : bm.domain ? (
                         <img
-                          src={getFaviconWithCache(bm.favicon)}
+                          src={getFaviconWithCache(bm.domain)}
                           alt={bm.name}
                           className="w-8 h-8 rounded-lg object-contain"
                         />
                       ) : (
-                        <div className="w-14 h-14 bg-gray-700 rounded-lg" />
+                        <div className="text-[32px]/[32px]">{'🐬'}</div>
                       )}
                       <span className="text-xs text-nowrap text-center text-gray-200 group-hover:text-white transition-colors">
                         {bm.name}
