@@ -7,6 +7,7 @@ import { cn, getFaviconWithCache } from '@/lib/utils';
 import { BackgroundVideo } from './components/BackgroundVideo';
 import {
   bookmarks,
+  GIST_URL,
   googleIcon,
   navItems,
   searchEngines,
@@ -14,6 +15,7 @@ import {
   type NavItems,
   type SearchEngine,
 } from '@/lib/const';
+import { useGistBookmarks } from './components/useBookmarks';
 
 function App() {
   const [activeTab, setActiveTab] = useState<NavItems>('Home');
@@ -22,6 +24,10 @@ function App() {
     base: 'https://www.google.com/search?q=',
     icon: googleIcon,
   });
+  const { gistData, loading: isLoading } = useGistBookmarks(GIST_URL);
+
+  console.log('---gistData', gistData);
+  console.log('---isLoading', isLoading);
 
   const filteredBookmarks = useMemo<Bookmark[]>(() => {
     return bookmarks.filter((bm) => bm.category === activeTab);
@@ -43,7 +49,7 @@ function App() {
         window.open(`${activeSearchEngine.base}${q}`, '_blank');
       }
     },
-    [activeSearchEngine]
+    [activeSearchEngine],
   );
 
   function handleClickNav(item: NavItems) {
@@ -79,7 +85,7 @@ function App() {
                 activeTab === item
                   ? 'text-white border-b-2 border-blue-500 pb-1'
                   : 'text-gray-400 hover:text-white hover:bg-white/10',
-                'text-sm md:text-base lg:text-base'
+                'text-sm md:text-base lg:text-base',
               )}
               onClick={() => handleClickNav(item)}
             >
@@ -100,7 +106,7 @@ function App() {
                     'border-none bg-black/30 border-white/20 text-gray-300 hover:bg-white/10 hover:text-white',
                     activeSearchEngine.label === eng.label
                       ? 'text-blue-600 hover:text-blue-600'
-                      : ''
+                      : '',
                   )}
                   onClick={() => handleClickEngine(eng)}
                 >
@@ -129,7 +135,7 @@ function App() {
                 return (
                   <a
                     key={i}
-                    href={bm.url ?? '#'}
+                    href={bm.url ?? bm.domain}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="h-24"
