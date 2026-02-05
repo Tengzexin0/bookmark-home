@@ -32,12 +32,26 @@ function App() {
   const filteredBookmarks = useMemo<Bookmark[]>(() => {
     if (isLoading && !gistData) return [];
 
+    let list: Bookmark[] = [];
+
     if (gistData && typeof gistData === 'object' && !Array.isArray(gistData)) {
-      return gistData[activeTab] || [];
+      list = gistData[activeTab] || [];
+    } else {
+      list = bookmarks.filter((bm) => bm.category === activeTab);
     }
 
-    return bookmarks.filter((bm) => bm.category === activeTab);
-  }, [activeTab, gistData, isLoading]);
+    if (activeSearchEngine.label === '站内' && searchQuery.trim()) {
+      const lowerQuery = searchQuery.toLowerCase().trim();
+      return list.filter(
+        (bm) =>
+          bm.name.toLowerCase().includes(lowerQuery) ||
+          (bm.domain || '').toLowerCase().includes(lowerQuery) ||
+          (bm.url || '').toLowerCase().includes(lowerQuery),
+      );
+    }
+
+    return list;
+  }, [activeTab, gistData, isLoading, activeSearchEngine.label, searchQuery]);
 
   const BackInformation = useMemo(() => {
     const R2_URL = 'https://assets-cdn.tzx.cc.cd';

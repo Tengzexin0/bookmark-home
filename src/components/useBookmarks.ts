@@ -22,8 +22,8 @@ export function useGistBookmarks<T>(url: string) {
         setError(null);
       })
       .catch((err) => {
-        console.error('----err', err);
         if (err.name === 'AbortError') return;
+        console.error('----err', err);
         setError(err);
       })
       .finally(() => setLoading(false));
