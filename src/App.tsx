@@ -50,13 +50,13 @@ function App() {
 
   const handleSearch = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === 'Enter' && searchQuery.trim()) {
-        const q = encodeURIComponent(searchQuery.trim());
+      if (e.key === 'Enter' && e.currentTarget.value.trim()) {
+        const q = encodeURIComponent(e.currentTarget.value.trim());
         window.open(`${activeSearchEngine.base}${q}`, '_blank');
         setSearchQuery('');
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     [activeSearchEngine],
   );
 
