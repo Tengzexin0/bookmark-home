@@ -25,6 +25,8 @@ function App() {
     base: 'https://www.google.com/search?q=',
     icon: googleIcon,
   });
+  const [searchQuery, setSearchQuery] = useState<string>('');
+
   const { gistData, loading: isLoading } = useGistBookmarks<GistData>(GIST_URL);
 
   const filteredBookmarks = useMemo<Bookmark[]>(() => {
@@ -48,11 +50,13 @@ function App() {
 
   const handleSearch = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === 'Enter' && e.currentTarget.value.trim()) {
-        const q = encodeURIComponent(e.currentTarget.value.trim());
+      if (e.key === 'Enter' && searchQuery.trim()) {
+        const q = encodeURIComponent(searchQuery.trim());
         window.open(`${activeSearchEngine.base}${q}`, '_blank');
+        setSearchQuery('');
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [activeSearchEngine],
   );
 
@@ -62,6 +66,7 @@ function App() {
 
   function handleClickEngine(eng: SearchEngine) {
     setActiveSearchEngine(eng);
+    setSearchQuery('');
   }
 
   return (
@@ -122,6 +127,8 @@ function App() {
               <Input
                 placeholder={`${activeSearchEngine.label}搜索...`}
                 className="border-none pl-12 pr-12 py-7 text-sm bg-black/50 border-white/20 text-white placeholder:text-gray-400 rounded-full shadow-2xl backdrop-blur-md"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={handleSearch}
               />
               <Search className="absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
