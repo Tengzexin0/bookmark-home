@@ -5,9 +5,14 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function getFavicon(domain?: string) {
+export function getFavicon(domain: string): string {
+  if (!domain) return '';
+  const cleanDomain = domain
+    .replace(/^https?:\/\//, '')
+    .replace(/\/.*$/, '')
+    .replace(/^www\./, '');
   const proxyUrl = 'favicon-proxy.tzx.cc.cd';
-  return domain ? `https://${proxyUrl}/?domain=${domain}&sz=64` : '';
+  return `https://${proxyUrl}/?domain=${cleanDomain}&sz=64`;
 }
 
 const faviconCache = new Map<string, string>();

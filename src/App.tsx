@@ -25,15 +25,19 @@ function App() {
     base: 'https://www.google.com/search?q=',
     icon: googleIcon,
   });
-  const { gistData } = useGistBookmarks<GistData>(GIST_URL);
+  const { gistData, loading: isLoading } = useGistBookmarks<GistData>(GIST_URL);
+
+  console.log('----gistData', gistData);
 
   const filteredBookmarks = useMemo<Bookmark[]>(() => {
-    const source =
-      gistData && typeof gistData === 'object' && !Array.isArray(gistData)
-        ? gistData[activeTab] || []
-        : bookmarks;
-    return source.filter((bm) => bm.category === activeTab);
-  }, [activeTab, gistData]);
+    if (isLoading && !gistData) return [];
+
+    if (gistData && typeof gistData === 'object' && !Array.isArray(gistData)) {
+      return gistData[activeTab] || [];
+    }
+
+    return bookmarks.filter((bm) => bm.category === activeTab);
+  }, [activeTab, gistData, isLoading]);
 
   const BackInformation = useMemo(() => {
     const R2_URL = 'https://assets-cdn.tzx.cc.cd';
@@ -152,7 +156,7 @@ function App() {
                           className="w-8 h-8 rounded-lg object-contain"
                         />
                       ) : (
-                        <div className="text-[32px]/[32px]">{'🐬'}</div>
+                        <div className="text-[32px]/[32px]">"🦀"</div>
                       )}
                       <span className="text-xs text-nowrap text-center text-gray-200 group-hover:text-white transition-colors">
                         {bm.name}
