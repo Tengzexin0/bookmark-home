@@ -27,8 +27,6 @@ function App() {
   });
   const { gistData, loading: isLoading } = useGistBookmarks<GistData>(GIST_URL);
 
-  console.log('----gistData', gistData);
-
   const filteredBookmarks = useMemo<Bookmark[]>(() => {
     if (isLoading && !gistData) return [];
 

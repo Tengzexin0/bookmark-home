@@ -23,7 +23,7 @@ export function useGistBookmarks<T>(url: string) {
         setError(null);
       })
       .catch((err) => {
-        console.log('----err', err);
+        console.error('----err', err);
         if (err.name === 'AbortError') return;
         setError(err);
       })
