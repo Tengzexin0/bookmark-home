@@ -20,7 +20,6 @@ body {
   /* background: url('../public/astronaut.jpg') center/cover no-repeat fixed; */
   color: white;
   height: -webkit-fill-available;
-  height: 100%;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
 }
