@@ -26,7 +26,9 @@ export const navItems = [
 export type NavItems = (typeof navItems)[number];
 export type SearchEngine = (typeof searchEngines)[number];
 
-export const GIST_URL = `https://gist.githubusercontent.com/Tengzexin0/8954a8f73d83c29ce2d87fbdd85431b0/raw/c691512b0c1394f21c31a056e7edb4764c15c374/bookmarks.json?t=${Date.now()}`;
+export type GistData = Partial<Record<NavItems, Bookmark[]>>;
+
+export const GIST_URL = `https://gist.githubusercontent.com/Tengzexin0/8954a8f73d83c29ce2d87fbdd85431b0/raw/564d16688bf61c2f9b648a221a94992c5664b63d/bookmarks.json?t=${Date.now()}`;
 
 export const searchEngines = [
   {

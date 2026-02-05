@@ -14,6 +14,14 @@ export function BackgroundVideo({
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
+    const fixSafariHeight = () => {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    };
+
+    fixSafariHeight();
+    window.addEventListener('resize', fixSafariHeight);
+
     const video = videoRef.current;
     if (video) {
       video.muted = true;
@@ -26,7 +34,10 @@ export function BackgroundVideo({
       };
       playVideo();
     }
+
+    return () => window.removeEventListener('resize', fixSafariHeight);
   }, []);
+
   return (
     <video
       ref={videoRef}
@@ -35,7 +46,8 @@ export function BackgroundVideo({
       muted
       playsInline
       preload="auto"
-      className={`fixed inset-0 w-full h-[calc(100dvh+60px)] object-cover -z-10 ${className}`}
+      style={{ height: 'calc(var(--vh,1vh)*100)' }}
+      className={`fixed inset-0 w-screen object-cover -z-10 ${className}`}
       {...props}
     >
       <source media={media} src={src} type="video/mp4" />

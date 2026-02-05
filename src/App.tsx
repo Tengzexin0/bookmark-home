@@ -12,6 +12,7 @@ import {
   navItems,
   searchEngines,
   type Bookmark,
+  type GistData,
   type NavItems,
   type SearchEngine,
 } from '@/lib/const';
@@ -24,14 +25,15 @@ function App() {
     base: 'https://www.google.com/search?q=',
     icon: googleIcon,
   });
-  const { gistData, loading: isLoading } = useGistBookmarks(GIST_URL);
-
-  console.log('---gistData', gistData);
-  console.log('---isLoading', isLoading);
+  const { gistData } = useGistBookmarks<GistData>(GIST_URL);
 
   const filteredBookmarks = useMemo<Bookmark[]>(() => {
-    return bookmarks.filter((bm) => bm.category === activeTab);
-  }, [activeTab]);
+    const source =
+      gistData && typeof gistData === 'object' && !Array.isArray(gistData)
+        ? gistData[activeTab] || []
+        : bookmarks;
+    return source.filter((bm) => bm.category === activeTab);
+  }, [activeTab, gistData]);
 
   const BackInformation = useMemo(() => {
     const R2_URL = 'https://assets-cdn.tzx.cc.cd';
