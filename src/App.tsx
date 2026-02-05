@@ -131,7 +131,7 @@ function App() {
             </div>
           </div>
 
-          <div className="flex-1 w-full overflow-y-auto overscroll-contain px-2 sm:px-4 lg:px-8 pb-20">
+          <div className="flex-1 w-full overflow-y-auto overscroll-contain px-2 sm:px-4 lg:px-8 pb-20 no-scrollbar">
             <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-4 sm:gap-6 md:gap-10 lg:gap-12 xl:gap-14 w-full max-w-7xl mx-auto">
               {filteredBookmarks.map((bm, i) => {
                 return (

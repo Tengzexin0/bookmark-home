@@ -97,3 +97,15 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* 隐藏滚动条但保留滚动功能 */
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
