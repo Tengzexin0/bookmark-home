@@ -18,7 +18,6 @@ export function useGistBookmarks<T>(url: string) {
         return res.json();
       })
       .then((jsonData) => {
-        console.log('----jsonData', jsonData);
         setGistData(jsonData);
         setError(null);
       })
