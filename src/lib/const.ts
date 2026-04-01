@@ -4,6 +4,17 @@ import baiduIcon from '@/assets/icons/baidu_icon.svg';
 import githubIcon from '@/assets/icons/github_icon.svg';
 import joomlaIcon from '@/assets/icons/joomla_icon.svg'; // 站內的 icon
 
+export interface Position {
+  x: number;
+  y: number;
+}
+
+export interface HoverListener {
+  el: Element;
+  enter: () => void;
+  leave: () => void;
+}
+
 export interface Bookmark {
   name: string;
   domain: string;
