@@ -17,7 +17,6 @@ import {
   type SearchEngine,
 } from '@/lib/const';
 import { useGistBookmarks } from './components/useBookmarks';
-import { CustomCursor } from './components/CustomCursor';
 
 function App() {
   const [activeTab, setActiveTab] = useState<NavItems>('Home');
@@ -86,7 +85,6 @@ function App() {
 
   return (
     <>
-      <CustomCursor />
       <div className="relative h-[100dvh] flex flex-col overflow-hidden">
         <BackgroundVideo
           media="(min-width: 768px)"
@@ -162,7 +160,7 @@ function App() {
                 {filteredBookmarks.map((bm, i) => {
                   return (
                     <a
-                      key={i}
+                      key={bm.url || bm.domain || bm.name + i}
                       href={bm.url ?? bm.domain}
                       target="_blank"
                       rel="noopener noreferrer"

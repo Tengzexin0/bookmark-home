@@ -45,8 +45,8 @@ export function BackgroundVideo({
       loop
       muted
       playsInline
-      preload="auto"
-      style={{ height: 'calc(var(--vh,1vh)*100)' }}
+      preload="metadata"
+      style={{ height: 'calc(var(--vh,1vh)*100)', objectFit: 'cover' }}
       className={`fixed inset-0 w-screen object-cover -z-10 ${className}`}
       {...props}
     >
