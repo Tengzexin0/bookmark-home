@@ -26,32 +26,58 @@ function App() {
     icon: googleIcon,
   });
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [isInternalSearchMode, setIsInternalSearchMode] = useState(false);
 
   const { gistData, loading: isLoading } = useGistBookmarks<GistData>(GIST_URL);
 
   const filteredBookmarks = useMemo<Bookmark[]>(() => {
     if (isLoading && !gistData) return [];
 
-    let list: Bookmark[] = [];
+    const trimmedQuery = searchQuery.trim().toLowerCase();
+    if (
+      trimmedQuery &&
+      (isInternalSearchMode || activeSearchEngine.label === '站内')
+    ) {
+      let allBookmarks: Bookmark[] = [];
 
+      if (
+        gistData &&
+        typeof gistData === 'object' &&
+        !Array.isArray(gistData)
+      ) {
+        // 从 Gist 数据取所有分类的书签
+        allBookmarks = Object.values(gistData).flat() as Bookmark[];
+      } else {
+        // 降级使用本地 bookmarks
+        allBookmarks = [...bookmarks];
+      }
+
+      return allBookmarks.filter(
+        (bm) =>
+          bm.name.toLowerCase().includes(trimmedQuery) ||
+          (bm.domain || '').toLowerCase().includes(trimmedQuery) ||
+          (bm.url || '').toLowerCase().includes(trimmedQuery) ||
+          (bm.category || '').toLowerCase().includes(trimmedQuery),
+      );
+    }
+
+    // 非站内搜索模式：保持原有按 Tab 过滤逻辑
+    let list: Bookmark[] = [];
     if (gistData && typeof gistData === 'object' && !Array.isArray(gistData)) {
       list = gistData[activeTab] || [];
     } else {
       list = bookmarks.filter((bm) => bm.category === activeTab);
     }
 
-    if (activeSearchEngine.label === '站内' && searchQuery.trim()) {
-      const lowerQuery = searchQuery.toLowerCase().trim();
-      return list.filter(
-        (bm) =>
-          bm.name.toLowerCase().includes(lowerQuery) ||
-          (bm.domain || '').toLowerCase().includes(lowerQuery) ||
-          (bm.url || '').toLowerCase().includes(lowerQuery),
-      );
-    }
-
     return list;
-  }, [activeTab, gistData, isLoading, activeSearchEngine.label, searchQuery]);
+  }, [
+    activeTab,
+    gistData,
+    isLoading,
+    activeSearchEngine.label,
+    searchQuery,
+    isInternalSearchMode,
+  ]);
 
   const BackInformation = useMemo(() => {
     const R2_URL = 'https://assets-cdn.tzx.cc.cd';
@@ -80,6 +106,7 @@ function App() {
 
   function handleClickEngine(eng: SearchEngine) {
     setActiveSearchEngine(eng);
+    setIsInternalSearchMode(eng.label === '站内');
     setSearchQuery('');
   }
 
@@ -140,7 +167,11 @@ function App() {
               </div>
               <div className="w-full relative max-w-xl mb-8 md:mb-16">
                 <Input
-                  placeholder={`${activeSearchEngine.label}搜索...`}
+                  placeholder={
+                    isInternalSearchMode || activeSearchEngine.label === '站内'
+                      ? '站内全局搜索书签（支持名称/域名/URL/分类）...'
+                      : `${activeSearchEngine.label}搜索...`
+                  }
                   className="border-none pl-12 pr-12 py-7 text-sm bg-black/50 border-white/20 text-white placeholder:text-gray-400 rounded-full shadow-2xl backdrop-blur-md"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
