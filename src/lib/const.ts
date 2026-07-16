@@ -25,13 +25,13 @@ export interface Bookmark {
 
 export const navItems = [
   'Home',
-  'Tools',
   'Ai-stuff',
+  'Tools',
+  'Mail & Domain',
+  'Dev',
   'Cloud',
   'Container',
   'Software',
-  'Dev',
-  'Mail & Domain',
 ] as const;
 
 export type NavItems = (typeof navItems)[number];
