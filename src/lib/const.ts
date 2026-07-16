@@ -30,8 +30,8 @@ export const navItems = [
   'Mail & Domain',
   'Dev',
   'Cloud',
-  'Container',
   'Software',
+  'Audio-visual',
 ] as const;
 
 export type NavItems = (typeof navItems)[number];
