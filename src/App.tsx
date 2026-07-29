@@ -219,6 +219,28 @@ function App() {
               </div>
             </div>
           </main>
+
+          <footer className="flex-shrink-0 flex flex-nowrap items-center justify-center gap-x-4 gap-y-1 py-3 px-4 text-xs text-gray-400 backdrop-blur-sm border-t border-white/10">
+            Copyright © 2026
+            <span className="text-gray-600">|</span>
+            <a
+              href="https://github.com/Tengzexin0/bookmark-home"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white transition-colors"
+            >
+              Powered by Tengzexin
+            </a>
+            <span className="text-gray-600">|</span>
+            <a
+              href="https://gist.github.com/Tengzexin0/8954a8f73d83c29ce2d87fbdd85431b0"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white transition-colors flex items-center gap-0.5"
+            >
+              GIST_URL
+            </a>
+          </footer>
         </div>
       </div>
     </>

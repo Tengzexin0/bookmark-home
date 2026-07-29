@@ -1,73 +1,50 @@
-# React + TypeScript + Vite
+# bookmark-home
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+一个简洁、美观的个人书签主页，支持从 GitHub Gist 动态加载书签数据，带背景视频、多搜索引擎切换和站内搜索。
 
-Currently, two official plugins are available:
+## 功能特性
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 分类导航（Home / 其他自定义分类）
+- 多搜索引擎切换（Google、站内搜索等）
+- 站内全局搜索书签（名称 / 域名 / URL / 分类）
+- 从 GitHub Gist 实时拉取书签数据（失败时降级使用本地数据）
+- 响应式布局 + 背景视频
+- Favicon 缓存与展示
 
-## React Compiler
+## 数据源
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+书签数据托管在 GitHub Gist：
 
-## Expanding the ESLint configuration
+- **Gist**：https://gist.github.com/Tengzexin0/8954a8f73d83c29ce2d87fbdd85431b0
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+修改 Gist 中的 JSON 后，页面刷新即可生效（无需重新部署）。
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 项目地址
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- **GitHub**：https://github.com/Tengzexin0/bookmark-home
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 本地开发
+
+```bash
+# 安装依赖
+npm install
+
+# 启动开发服务器
+npm run dev
+
+# 构建生产版本
+npm run build
+
+# 预览构建结果
+npm run preview
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+技术栈
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+React 19 + TypeScript
+Vite (rolldown-vite)
+Tailwind CSS + shadcn/ui
+Lucide React
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+License
+MIT
