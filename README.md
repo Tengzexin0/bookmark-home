@@ -1,6 +1,7 @@
 # bookmark-home
 
 一个简洁、美观的个人书签主页，支持从 GitHub Gist 动态加载书签数据，带背景视频、多搜索引擎切换和站内搜索。
+[个人专属页](bookmark.tzx.cc.cd)
 
 ## 功能特性
 
@@ -13,15 +14,9 @@
 
 ## 数据源
 
-书签数据托管在 GitHub Gist：
+书签数据托管在 [GitHub Gist](https://gist.github.com/Tengzexin0/8954a8f73d83c29ce2d87fbdd85431b0)
 
-- **Gist**：https://gist.github.com/Tengzexin0/8954a8f73d83c29ce2d87fbdd85431b0
-
-修改 Gist 中的 JSON 后，页面刷新即可生效（无需重新部署）。
-
-## 项目地址
-
-- **GitHub**：https://github.com/Tengzexin0/bookmark-home
+修改 Gist 中的 JSON 后，页面刷新即可生效（无需重新部署）
 
 ## 本地开发
 
@@ -39,12 +34,6 @@ npm run build
 npm run preview
 ```
 
-技术栈
+## License
 
-React 19 + TypeScript
-Vite (rolldown-vite)
-Tailwind CSS + shadcn/ui
-Lucide React
-
-License
 MIT
