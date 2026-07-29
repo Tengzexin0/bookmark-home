@@ -1,7 +1,7 @@
 # bookmark-home
 
 一个简洁、美观的个人书签主页，支持从 GitHub Gist 动态加载书签数据，带背景视频、多搜索引擎切换和站内搜索。
-[个人专属页](bookmark.tzx.cc.cd)
+地址：[个人专属页](bookmark.tzx.cc.cd)
 
 ## 功能特性
 
